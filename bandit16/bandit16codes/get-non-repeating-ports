@@ -1,0 +1,20 @@
+#!/bin/bash
+
+ports_list=`./portscanner 31000 32000`
+echo "ports list: _${ports_list}_" > "$0.log"
+
+final_ports=""
+for p in ${ports_list[@]}
+do
+
+  echo "Port $p" >> "$0.log"
+  value=`echo "hola" | nc -q 1 localhost $p`
+  echo "Value: $value" >> "$0.log"
+  
+  if [ -z "$value" ]; then
+	final_ports="$final_ports $p"
+  fi
+done
+
+echo "END" >> "$0.log"
+echo $final_ports

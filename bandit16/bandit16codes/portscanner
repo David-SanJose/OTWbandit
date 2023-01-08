@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ -z $1 ] || [ -z $2 ];
+then
+ echo "ERROR: Provide portsStart and portsEnd as parameters"
+ exit 1
+fi
+ports_list=`nmap localhost -p $1-$2 | awk '/PORT/{y=1;next}y' | head -n -2 | awk '{print $1}' | sed 's/\/tcp//g'`
+echo $ports_list
+

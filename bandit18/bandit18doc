@@ -1,0 +1,6 @@
+Para tomar la flag, se puede hacer mediante scp, con el comando:
+scp -P 2220 bandit18@bandit.labs.overthewire.org:readme* ./bandit18/
+
+
+Otra forma es ejecutar comandos inmediatamente tras hacer login, mediante "-t"
+ssh bandit18@bandit.labs.overthewire.org -p 2220 -t 'cat readme'

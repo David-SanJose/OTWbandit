@@ -1,0 +1,12 @@
+Mediante "man git" o con el siguiente enlace se puede acceder al manual 
+de git: https://git.github.io/htmldocs/user-manual.html
+
+Filtrando por ssh se encuentra como hacer un "git clone" con ssh. El 
+comando es el siguiente:
+
+git clone ssh://bandit27-git@localhost:2220/home/bandit27-git/repo
+
+Es importante especificar el puerto 2220, ya que si no la conexión ssh no se
+realizará correctamente.
+
+Tras clonar los datos, se obtiene el README con la flag.

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+if [ -z $1 ];then
+  echo "Parametro vacio, introduce el numero de bandido :D"
+  exit
+fi
+
+usuario="bandit${1}"
+dominio=bandit.labs.overthewire.org
+puerto=2220
+
+numAnt=`expr $1 - 1`
+archivoFlag="bandit${numAnt}/bandit${numAnt}_flag"
+if [ -f $archivoFlag ];then
+
+  password=`cat ${archivoFlag}`
+  echo $password | xclip -selection c
+  echo "Contraseña desde archivo: $archivoFlag"
+  echo "Contraseña copiada al clipboard: $password"
+else
+  echo "El archivo de la contraseña '${archivoFlag}' a copiar no existe"
+
+fi
+
+ssh ${usuario}@${dominio} -p ${puerto}
+

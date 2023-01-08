@@ -1,0 +1,39 @@
+# Se clona el repositorio en un directorio temporal
+mktemp -d
+cd /tmp/tmp.mh1tHHNY3Q
+git clone ssh://bandit28-git@localhost:2220/home/bandit28-git/repo
+
+#Dentro del README se encuentra lo siguiente: (cat README.md) 
+# Bandit Notes
+Some notes for level29 of bandit.
+
+## credentials
+
+- username: bandit29
+- password: xxxxxxxxxx
+
+# Como se puede ver, es un archivo con las credenciales del usuario 
+# bandit29, pero la contraseña aparece oculta. Teniendo en cuenta que 
+# estamos trabajando con un repositorio de git, tenemos acceso a las 
+# anteriores versiones de los archivos, con los que comprobar si 
+# previamente hubo algo que pueda comprometer las credenciales. Una 
+# opcion es ver el último commit, pudiendo observar los cambios, 
+# mediante el comando "git show". Los resultados:
+commit 5f45cfaca938393c7706fec16ab1ca627e947f64 (HEAD -> master, origin/master, origin/HEAD)
+Author: Morla Porla <morla@overthewire.org>
+Date:   Sat Dec 3 08:14:06 2022 +0000
+
+    fix info leak
+
+diff --git a/README.md b/README.md
+index b302105..5c6457b 100644
+--- a/README.md
++++ b/README.md
+@@ -4,5 +4,5 @@ Some notes for level29 of bandit.
+ ## credentials
+ 
+ - username: bandit29
+-- password: tQKvmcwNYcFS6vmPHIUSI3ShmsrQZK8S
++- password: xxxxxxxxxx
+
+#Como se puede observar, la contraseña queda revelada como un cambio en el último commit.

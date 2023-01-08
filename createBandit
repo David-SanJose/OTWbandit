@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [ -z $1 ]; then
+  echo "argumento inicial vacio"
+fi
+
+direc="./bandit${1}"
+if [ -d $direc ]; then
+  echo "El directorio $direc ya existe"
+  exit
+fi
+
+mkdir $direc
+echo "Directorio $direc creado"
+touch "${direc}/bandit${1}doc.txt"
+echo "Documento creado"
+touch "${direc}/bandit${1}_flag"
+echo "archivo flag vacio creado"

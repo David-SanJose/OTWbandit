@@ -1,0 +1,10 @@
+Las flags de setuid y setgid permiten ejecutar archivos binarios con 
+mayores privilegios de los que tiene el usuario base. En este desafio 
+se da este archivo para ejecutarse como bandit20. Este script permite 
+lanzar comandos como bandit20.
+
+Wikipedia:
+https://en.wikipedia.org/wiki/Setuid
+
+Comando usado:
+./bandit20-do cat /etc/bandit_pass/bandit20

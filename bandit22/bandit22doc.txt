@@ -1,0 +1,30 @@
+#Dentro de /etc/cron.d se encuentra "cronjob_bandit23", el cual contiene lo siguiente:
+cat cronjob_bandit23
+@reboot bandit23 /usr/bin/cronjob_bandit23.sh  &> /dev/null
+* * * * * bandit23 /usr/bin/cronjob_bandit23.sh  &> /dev/null
+# bandit23 ejecuta cada minuto "/usr/bin/cronjob_bandit23.sh", el cual contiene:
+cat /usr/bin/cronjob_bandit23.sh
+#!/bin/bash
+
+myname=$(whoami)
+mytarget=$(echo I am user $myname | md5sum | cut -d ' ' -f 1)
+
+echo "Copying passwordfile /etc/bandit_pass/$myname to /tmp/$mytarget"
+
+cat /etc/bandit_pass/$myname > /tmp/$mytarget
+
+# Este script toma la String "I am user $myname" y la transforma mediante la funcion hash md5, de forma que genera
+# una cadena unica mediante esta, con la que crear el nombre del archivo donde se copia la contraseña del usuario
+#bandit23. Para obtener el nombre de la carpeta, solo es necesario ejecutar la linea de la transformación, pero 
+# cambiando la variable "$myname" por "bandit23", ya que si no "whoami" hará uso de nuestro nombre de usuario, y
+# el resultado del hash será otro.
+echo `echo I am user bandit23 | md5sum | cut -d ' ' -f 1`
+#El resultado es el siguiente:
+8ca319486bfbbc3663ea0fbe81326349
+#Con el nombre del archivo, se puede obtener la contraseña: 
+cat /tmp/8ca319486bfbbc3663ea0fbe81326349
+QYw0Y2aiA672PsMmh9puTQuhoz8SyR2G
+
+
+#Mas informacion de md5sum aqui:
+https://www.sanfoundry.com/5-practical-md5sum-command-usage-examples-in-linux/#:~:text=Here%E2%80%99s%20the%20listing%20of%20example%20usage%20of%20%E2%80%9Cmd5sum%E2%80%9D,information%20on%20standard%20output%20then%20exit%20%28md5sum%20-v%29%3A

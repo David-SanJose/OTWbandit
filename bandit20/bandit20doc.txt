@@ -1,0 +1,13 @@
+Para completar este desafio he hecho uso de netcat (nc), poniendolo a la escucha en el puerto 5006,
+ejecutando el binario "suconnect" y enviando la contraseña anterior a traves de netcat. Para hacerlo todo desde el
+mismo terminal, he lanzado ambos en segundo plano mediante "&".
+
+El proceso de comandos es el siguiente:
+
+nc -l -p 5006 &
+./suconnect 5006 &
+
+#Se observa que ambos esten el segundo plano
+jobs -l
+#Se accede a nc y se devuelve la contraseña
+fg %1

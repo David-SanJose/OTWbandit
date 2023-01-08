@@ -1,0 +1,18 @@
+#!/bin/bash
+
+ports_list=`./get-non-repeating-ports`
+echo "ports list: _${ports_list}_" > "$0.log"
+
+for p in ${ports_list[@]}
+do
+  echo "Start $p"
+  #openssl s_client -connect localhost:$p
+  value=`echo "JQttfApK4SeyHwDlI9SXGR50qclOAil1" | timeout 3 openssl s_client -quiet localhost:$p | tail -n+2`
+  echo "++++val: $value"
+  if ! [ -z $value ]; then
+	echo "Respuesta obtenida en $p, creando archivo $p.result"
+	echo "$value" > "$p.result"
+
+  fi
+  echo "End $p"
+done
